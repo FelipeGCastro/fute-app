@@ -1,20 +1,34 @@
-import { View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { useStylesContext } from 'hooks/styles'
 import stylesheets from './styles'
 
-const FieldMap = () => {
+interface Props {
+  withLetter?: 'small' | 'regular' | 'medium' | 'big'
+  onPressField?: (type: 'E' | 'D' | 'C' | 'B' | 'A') => void
+}
+
+const FieldMap = ({ withLetter, onPressField }: Props) => {
   const [styles] = useStylesContext(stylesheets)
 
+  const handleFieldPress = (type: 'E' | 'D' | 'C' | 'B' | 'A') => {
+    if (onPressField) {
+      onPressField(type)
+    }
+  }
+
   const renderField = (
-    type: 'fieldE' | 'fieldD' | 'fieldC' | 'fieldB' | 'fieldA',
-    direction: 'horizontal' | 'vertical',
+    type: 'E' | 'D' | 'C' | 'B' | 'A',
+    direction: 'horizontal' | 'vertical' = 'vertical',
   ) => {
+    const isHorizontal = direction === 'horizontal'
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => handleFieldPress(type)}
+        activeOpacity={0.7}
         style={[
           styles.field,
-          styles[type],
-          direction === 'horizontal' && styles.horizontal,
+          styles[`field${type}`],
+          isHorizontal && styles.horizontal,
         ]}>
         <View style={styles.greatAreaUp}>
           <View style={styles.smallAreaUp} />
@@ -23,31 +37,43 @@ const FieldMap = () => {
           <View style={styles.centerLine} />
         </View>
         <View style={styles.centerCircle} />
+        {!!withLetter && (
+          <View style={styles.typeTextContainer}>
+            <Text
+              style={[
+                styles.typeText,
+                styles[withLetter],
+                isHorizontal && styles.horizontalText,
+              ]}>
+              {type}
+            </Text>
+          </View>
+        )}
         <View style={styles.greatAreaDown}>
           <View style={styles.smallAreaDown} />
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.fieldContainerE}>
-          {renderField('fieldE', 'vertical')}
+          {renderField('E', undefined)}
         </View>
         <View style={styles.fieldContainerD}>
-          {renderField('fieldD', 'horizontal')}
+          {renderField('D', 'horizontal')}
         </View>
         <View style={styles.fieldsDown}>
           <View style={styles.fieldContainerC}>
-            {renderField('fieldC', 'vertical')}
+            {renderField('C', undefined)}
           </View>
           <View style={styles.fieldsAB}>
             <View style={styles.fieldContainerB}>
-              {renderField('fieldB', 'vertical')}
+              {renderField('B', undefined)}
             </View>
             <View style={styles.fieldContainerA}>
-              {renderField('fieldA', 'vertical')}
+              {renderField('A', undefined)}
             </View>
           </View>
         </View>

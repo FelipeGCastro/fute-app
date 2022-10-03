@@ -1,3 +1,4 @@
+import Text from '/styles/text'
 import { MapTypes } from '/utils/typeTools'
 
 const styles = (variables: AllVariablesType) =>
@@ -115,6 +116,35 @@ const styles = (variables: AllVariablesType) =>
         width: '100%',
         borderBottomWidth: 1,
         borderColor: variables.yellowish,
+      },
+      typeTextContainer: {
+        position: 'absolute',
+        right: 0,
+        left: 0,
+        bottom: 0,
+        top: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      typeText: {
+        fontSize: 38,
+        color: variables.white,
+        fontWeight: 'bold',
+      },
+      horizontalText: {
+        transform: [{ rotate: '-90deg' }],
+      },
+      small: {
+        fontSize: 12,
+      },
+      regular: {
+        fontSize: 18,
+      },
+      medium: {
+        fontSize: 30,
+      },
+      big: {
+        fontSize: 45,
       },
       centerCircle: {
         position: 'absolute',

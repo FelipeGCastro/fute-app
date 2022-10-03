@@ -27,7 +27,9 @@ const Curtain = ({ navigation }: Props) => {
         <View style={styles.textInfo}>
           <Text style={styles.textTitle}>FUTEBOL</Text>
           <Text style={styles.textSecondTitle}>PARQUE DA RODOVIA</Text>
-          <Text style={styles.poweredBy}>Powered by Luiz and Allisson</Text>
+          <Text style={styles.poweredBy}>
+            Powered by Luiz Castro and Allisson
+          </Text>
         </View>
       </View>
       <TouchableOpacity

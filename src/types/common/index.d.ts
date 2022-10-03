@@ -24,6 +24,8 @@ type AllVariablesType = typeof import('../../styles/variables').allVariables
 
 type StylesHook = (variables: AllVariablesType) => IStyles
 
+type IFieldsType = 'A' | 'B' | 'C' | 'D' | 'E'
+
 declare module '*.png' {
   const value: any
   export = value
