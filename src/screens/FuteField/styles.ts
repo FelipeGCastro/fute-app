@@ -8,13 +8,17 @@ const styles = (variables: AllVariablesType) =>
         flexGrow: 1,
         backgroundColor: variables.background,
         padding: variables.margin_200,
-        alignItems: 'center',
+        alignItems: 'stretch',
+      },
+      keyboardAvoidingView: {
+        flexGrow: 1,
       },
       title: {
         ...Text.heading,
         color: variables.yellowish,
         fontWeight: 'bold',
         textTransform: 'uppercase',
+        alignSelf: 'center',
       },
       teamsNow: {
         ...Text.heading,
@@ -22,6 +26,7 @@ const styles = (variables: AllVariablesType) =>
         fontWeight: 'bold',
         textTransform: 'uppercase',
         marginTop: variables.margin_400,
+        alignSelf: 'center',
       },
       wrapperInput: {
         alignSelf: 'stretch',
@@ -33,6 +38,7 @@ const styles = (variables: AllVariablesType) =>
         ...Text.regular,
         color: variables.yellowish,
         marginTop: variables.margin_200,
+        alignSelf: 'center',
       },
       plusButton: {
         width: 64,
@@ -44,6 +50,7 @@ const styles = (variables: AllVariablesType) =>
       },
       constants: {
         plusColor: variables.white,
+        keyboardOffset: variables.margin_200,
       },
     },
   })
