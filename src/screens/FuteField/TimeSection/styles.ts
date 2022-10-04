@@ -9,6 +9,7 @@ const styles = (variables: AllVariablesType) =>
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: variables.margin_200,
+        paddingHorizontal: variables.margin_200,
       },
       fakeSpace: {
         width: 40,
