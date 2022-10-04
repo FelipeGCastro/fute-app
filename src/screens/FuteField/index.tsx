@@ -10,7 +10,6 @@ import {
 import { useStylesContext } from 'hooks/styles'
 import usePolyglot from 'hooks/polyglot'
 import stylesheets from './styles'
-// import { StackScreenProps } from '@react-navigation/stack'
 import { NativeStackScreenProps as StackScreenProps } from '@react-navigation/native-stack'
 import TimeSection from './TimeSection'
 import InputFieldText from '/components/common/InputFieldText'

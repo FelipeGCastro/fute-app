@@ -23,7 +23,7 @@ const styles = (variables: AllVariablesType) =>
       },
       teamsNow: {
         ...Text.heading,
-        color: variables.yellowish,
+        color: variables.white,
         fontWeight: 'bold',
         textTransform: 'uppercase',
         marginTop: variables.margin_400,
