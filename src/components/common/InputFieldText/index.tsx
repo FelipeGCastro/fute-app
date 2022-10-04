@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Text, TextInput, TextInputProps, TouchableOpacity } from 'react-native'
 import { useStylesContext } from 'hooks/styles'
 import stylesheets from './styles'
@@ -8,6 +8,7 @@ import { getInputProps } from '/utils/form'
 interface Props extends TextInputProps {
   onChangeText: (value: string) => void
   defaultValue?: string
+  defaultFocused?: boolean
   error?: string
   label?: string
   big?: boolean
@@ -24,6 +25,7 @@ interface Props extends TextInputProps {
 const InputFieldText = ({
   onChangeText,
   defaultValue,
+  defaultFocused,
   error,
   label,
   personalizedType,
@@ -34,6 +36,10 @@ const InputFieldText = ({
   const [focused, setFocused] = useState(false)
   const [internalValue, setInternalValue] = useState(defaultValue)
   const refInput = useRef<TextInput>(null)
+
+  useEffect(() => {
+    setFocused(!!defaultFocused)
+  }, [defaultFocused])
 
   const focusedOrValue = focused || !!internalValue
 

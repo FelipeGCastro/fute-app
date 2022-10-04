@@ -1,12 +1,19 @@
 import { StyleProp, TextStyle } from 'react-native'
 
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import {
+  FontAwesome,
+  MaterialIcons,
+  FontAwesome5,
+  AntDesign,
+} from '@expo/vector-icons'
 
 const iconNames = {
   play: FontAwesome,
   pause: FontAwesome,
   plus: FontAwesome,
   replay: MaterialIcons,
+  close: AntDesign,
+  medal: FontAwesome5,
 } as const
 
 export type IconNames = keyof typeof iconNames

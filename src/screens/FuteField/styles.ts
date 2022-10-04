@@ -7,9 +7,10 @@ const styles = (variables: AllVariablesType) =>
       container: {
         flexGrow: 1,
         backgroundColor: variables.background,
-        padding: variables.margin_200,
+        paddingVertical: variables.margin_200,
         alignItems: 'stretch',
       },
+      content: {},
       keyboardAvoidingView: {
         flexGrow: 1,
       },
@@ -33,6 +34,7 @@ const styles = (variables: AllVariablesType) =>
         justifyContent: 'space-between',
         flexDirection: 'row',
         marginTop: variables.margin_500,
+        paddingHorizontal: variables.margin_200,
       },
       label: {
         ...Text.regular,
@@ -47,6 +49,15 @@ const styles = (variables: AllVariablesType) =>
         justifyContent: 'center',
         backgroundColor: variables.green,
         marginLeft: variables.margin_100,
+      },
+      listTeam: {
+        marginTop: variables.margin_400,
+      },
+      redBackground: {
+        backgroundColor: variables.negative,
+      },
+      iconPlus: {
+        transform: [{ rotate: '45deg' }],
       },
       constants: {
         plusColor: variables.white,
