@@ -18,6 +18,7 @@ import { isAndroid } from '/utils/deviceInfo'
 import TeamCard from './TeamCard'
 import AddButton from './AddButton'
 import Reanimated, { FadeIn, FadeOut } from 'react-native-reanimated'
+import Header from '/components/navigation/Header'
 
 type RootStackParamList = {
   FuteField: { field: IFieldsType }
@@ -43,7 +44,7 @@ const FuteField = ({ route }: Props) => {
 
   const renderHeader = () => (
     <>
-      <Text style={styles.title}>Campo {field}</Text>
+      <Header hasBack title={`Campo ${field}`} />
       <Text style={styles.label}>Acontecendo</Text>
       <Text style={styles.teamsNow}>LUIZ TEAM x LEA TEAM</Text>
       <TimeSection />
