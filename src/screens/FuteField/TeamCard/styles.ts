@@ -23,6 +23,10 @@ const styles = (variables: AllVariablesType) =>
         fontSize: 16,
         color: variables.yellowish,
       },
+      myTeam: {
+        color: variables.white,
+        fontWeight: 'bold',
+      },
       teamCapContainer: {
         backgroundColor: variables.green,
         width: 27,
@@ -49,9 +53,15 @@ const styles = (variables: AllVariablesType) =>
         width: 40,
         height: 40,
         backgroundColor: variables.green,
+        opacity: 0.3,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: variables.margin_200,
+      },
+      userVoted: {
+        opacity: 1,
+        borderWidth: 1,
+        borderColor: variables.yellowish,
       },
       captainButtonText: {
         ...Text.heading,

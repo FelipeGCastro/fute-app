@@ -18,6 +18,7 @@ export interface ITeam {
   name: string
   position: number
   votes: number
+  voted: string
 }
 
 interface IFieldContext {

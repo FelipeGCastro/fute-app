@@ -21,13 +21,25 @@ const styles = (variables: AllVariablesType) =>
         textTransform: 'uppercase',
         alignSelf: 'center',
       },
+      teamsPlayingContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: variables.margin_400,
+      },
+      icon: {
+        marginHorizontal: variables.margin_200,
+      },
       teamsNow: {
-        ...Text.heading,
+        width: variables.contentWidth / 2 - variables.margin_400,
+        fontSize: 18,
         color: variables.white,
         fontWeight: 'bold',
         textTransform: 'uppercase',
-        marginTop: variables.margin_400,
         alignSelf: 'center',
+      },
+      teamsNowLeft: {
+        textAlign: 'right',
       },
       wrapperInput: {
         alignSelf: 'stretch',

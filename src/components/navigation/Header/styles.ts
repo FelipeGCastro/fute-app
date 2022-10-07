@@ -10,6 +10,7 @@ const styles = (variables: AllVariablesType) =>
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: variables.margin_100,
+        paddingTop: variables.topSafeArea,
       },
       backContainer: {
         width: 40,

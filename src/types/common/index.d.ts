@@ -27,7 +27,7 @@ type StylesHook = (variables: AllVariablesType) => IStyles
 type IFieldsType = 'fieldA' | 'fieldB' | 'fieldC' | 'fieldD' | 'fieldE'
 
 interface IPayload {
-  action: 'vote-captain' | 'remove-team' | 'add-team'
+  action: 'vote-captain' | 'remove-team' | 'add-team' | 'fetch-teams'
   deviceId: string
   teamName: string
   votedDeviceId: string

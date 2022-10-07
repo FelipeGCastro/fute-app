@@ -1,9 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ITeam, IVote, useFieldContext } from '/contexts/field'
 import { socket } from '/services/io'
+
+interface ITeamsResponse extends ITeam {
+  _count: {
+    teamVoted: number
+  }
+  teamVoting: {
+    teamVotedDeviceId: string
+  }
+}
 interface IResponse {
   action: 'update-votes' | 'update-teams'
-  data: ITeam[] | IVote[]
+  data: ITeamsResponse[] | IVote[]
 }
 
 export const useField = (field: IFieldsType) => {
@@ -15,14 +24,27 @@ export const useField = (field: IFieldsType) => {
     return teams.findIndex(team => team.deviceId === myDeviceId) !== -1
   }, [teams, myDeviceId])
 
+  const voted = useMemo(
+    () => teams.find(team => team.deviceId === myDeviceId)?.voted,
+    [teams, myDeviceId],
+  )
+
   useEffect(() => {
     socket.on(field, ({ action, data }: IResponse) => {
       if (action === 'update-teams') {
-        updateTeams(data as ITeam[])
+        const formatData = data as ITeamsResponse[]
+        console.log('data:', JSON.stringify(data, null, 2))
+        const formattedTeams = formatData.map(item => ({
+          ...item,
+          votes: item._count?.teamVoted,
+          voted: item.teamVoting?.teamVotedDeviceId,
+        }))
+        updateTeams(formattedTeams as ITeamsResponse[])
       } else if (action === 'update-votes') {
         updateVotes(data as IVote[])
       }
     })
+    socket.emit(field, { action: 'fetch-teams' } as IPayload)
     return () => {
       socket.off(field)
     }
@@ -76,5 +98,6 @@ export const useField = (field: IFieldsType) => {
     votes,
     teams,
     hasTeam,
+    voted,
   }
 }

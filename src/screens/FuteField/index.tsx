@@ -31,8 +31,15 @@ const FuteField = ({ route }: Props) => {
   const [styles, stylesConstants] = useStylesContext(stylesheets)
   const t = usePolyglot('futeField')
   const [inputVisible, setInputVisible] = useState(false)
-  const { teams, addNextTeam, loading, voteCaptain, hasTeam, removeTeam } =
-    useField(field)
+  const {
+    teams,
+    addNextTeam,
+    loading,
+    voted,
+    voteCaptain,
+    hasTeam,
+    removeTeam,
+  } = useField(field)
   const [teamName, setTeamName] = useState('')
 
   const handleAddTeam = () => {
@@ -55,11 +62,18 @@ const FuteField = ({ route }: Props) => {
   const handlePressRemoveTeam = (deviceId: string) => {
     removeTeam(deviceId)
   }
+
+  const team1 = teams[0] ? teams[0].name : 'Aguardando...'
+  const team2 = teams[1] ? teams[1].name : 'Aguardando...'
   const renderHeader = () => (
     <>
-      <Header hasBack title={`Campo ${field}`} />
+      <Header hasBack title={`Campo ${field.split('field')[1]}`} />
       <Text style={styles.label}>Acontecendo</Text>
-      <Text style={styles.teamsNow}>LUIZ TEAM x LEA TEAM</Text>
+      <View style={styles.teamsPlayingContainer}>
+        <Text style={[styles.teamsNow, styles.teamsNowLeft]}>{team1}</Text>
+        <Icon style={styles.icon} name="close" color="#FFF" size={25} />
+        <Text style={styles.teamsNow}>{team2}</Text>
+      </View>
       <TimeSection />
       {inputVisible && !hasTeam && (
         <Reanimated.View
@@ -105,6 +119,7 @@ const FuteField = ({ route }: Props) => {
               {teams.map(team => (
                 <TeamCard
                   key={team.id}
+                  voted={voted}
                   onPressCaptain={handlePressCaptain}
                   onPressRemoveTeam={handlePressRemoveTeam}
                   team={team}
