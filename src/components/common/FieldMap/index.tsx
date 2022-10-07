@@ -4,20 +4,20 @@ import stylesheets from './styles'
 
 interface Props {
   withLetter?: 'small' | 'regular' | 'medium' | 'big'
-  onPressField?: (type: 'E' | 'D' | 'C' | 'B' | 'A') => void
+  onPressField?: (type: IFieldsType) => void
 }
 
 const FieldMap = ({ withLetter, onPressField }: Props) => {
   const [styles] = useStylesContext(stylesheets)
 
-  const handleFieldPress = (type: 'E' | 'D' | 'C' | 'B' | 'A') => {
+  const handleFieldPress = (type: IFieldsType) => {
     if (onPressField) {
       onPressField(type)
     }
   }
 
   const renderField = (
-    type: 'E' | 'D' | 'C' | 'B' | 'A',
+    type: IFieldsType,
     direction: 'horizontal' | 'vertical' = 'vertical',
   ) => {
     const isHorizontal = direction === 'horizontal'
@@ -25,11 +25,7 @@ const FieldMap = ({ withLetter, onPressField }: Props) => {
       <TouchableOpacity
         onPress={() => handleFieldPress(type)}
         activeOpacity={0.7}
-        style={[
-          styles.field,
-          styles[`field${type}`],
-          isHorizontal && styles.horizontal,
-        ]}>
+        style={[styles.field, styles[type], isHorizontal && styles.horizontal]}>
         <View style={styles.greatAreaUp}>
           <View style={styles.smallAreaUp} />
         </View>
@@ -59,21 +55,21 @@ const FieldMap = ({ withLetter, onPressField }: Props) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.fieldContainerE}>
-          {renderField('E', undefined)}
+          {renderField('fieldE', undefined)}
         </View>
         <View style={styles.fieldContainerD}>
-          {renderField('D', 'horizontal')}
+          {renderField('fieldD', 'horizontal')}
         </View>
         <View style={styles.fieldsDown}>
           <View style={styles.fieldContainerC}>
-            {renderField('C', undefined)}
+            {renderField('fieldC', undefined)}
           </View>
           <View style={styles.fieldsAB}>
             <View style={styles.fieldContainerB}>
-              {renderField('B', undefined)}
+              {renderField('fieldB', undefined)}
             </View>
             <View style={styles.fieldContainerA}>
-              {renderField('A', undefined)}
+              {renderField('fieldA', undefined)}
             </View>
           </View>
         </View>

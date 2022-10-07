@@ -27,11 +27,11 @@ const Home = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Card type="A" onPress={handleOnPress} />
-      <Card type="B" onPress={handleOnPress} />
-      <Card type="C" onPress={handleOnPress} />
-      <Card type="D" onPress={handleOnPress} />
-      <Card type="E" onPress={handleOnPress} />
+      <Card type="fieldA" onPress={handleOnPress} />
+      <Card type="fieldB" onPress={handleOnPress} />
+      <Card type="fieldC" onPress={handleOnPress} />
+      <Card type="fieldD" onPress={handleOnPress} />
+      <Card type="fieldE" onPress={handleOnPress} />
       <TouchableOpacity
         onPress={handleMap}
         activeOpacity={0.8}

@@ -19,6 +19,7 @@ import TeamCard from './TeamCard'
 import AddButton from './AddButton'
 import Reanimated, { FadeIn, FadeOut } from 'react-native-reanimated'
 import Header from '/components/navigation/Header'
+import { useField } from '/hooks/field'
 
 type RootStackParamList = {
   FuteField: { field: IFieldsType }
@@ -30,9 +31,16 @@ const FuteField = ({ route }: Props) => {
   const [styles, stylesConstants] = useStylesContext(stylesheets)
   const t = usePolyglot('futeField')
   const [inputVisible, setInputVisible] = useState(false)
+  const { teams, addNextTeam, loading, voteCaptain, hasTeam, removeTeam } =
+    useField(field)
   const [teamName, setTeamName] = useState('')
 
-  const handleAddTeam = () => ({})
+  const handleAddTeam = () => {
+    if (teamName.length > 3) {
+      console.log('addNextTeam:')
+      addNextTeam(teamName)
+    }
+  }
 
   const handleAddInput = () => {
     setInputVisible(true)
@@ -41,14 +49,19 @@ const FuteField = ({ route }: Props) => {
   const handleHideInput = () => {
     setInputVisible(false)
   }
-
+  const handlePressCaptain = (deviceId: string) => {
+    voteCaptain(deviceId)
+  }
+  const handlePressRemoveTeam = (deviceId: string) => {
+    removeTeam(deviceId)
+  }
   const renderHeader = () => (
     <>
       <Header hasBack title={`Campo ${field}`} />
       <Text style={styles.label}>Acontecendo</Text>
       <Text style={styles.teamsNow}>LUIZ TEAM x LEA TEAM</Text>
       <TimeSection />
-      {inputVisible && (
+      {inputVisible && !hasTeam && (
         <Reanimated.View
           entering={FadeIn}
           exiting={FadeOut}
@@ -89,14 +102,20 @@ const FuteField = ({ route }: Props) => {
             style={styles.content}>
             {renderHeader()}
             <View style={styles.listTeam}>
-              <TeamCard />
-              <TeamCard />
-              <TeamCard />
-              <TeamCard />
+              {teams.map(team => (
+                <TeamCard
+                  key={team.id}
+                  onPressCaptain={handlePressCaptain}
+                  onPressRemoveTeam={handlePressRemoveTeam}
+                  team={team}
+                />
+              ))}
             </View>
           </Reanimated.View>
         </TouchableWithoutFeedback>
-        {!inputVisible && <AddButton onPress={handleAddInput} />}
+        {!inputVisible && !hasTeam ? (
+          <AddButton onPress={handleAddInput} />
+        ) : null}
       </KeyboardAvoidingView>
     </View>
   )

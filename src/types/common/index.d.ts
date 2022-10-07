@@ -24,7 +24,14 @@ type AllVariablesType = typeof import('../../styles/variables').allVariables
 
 type StylesHook = (variables: AllVariablesType) => IStyles
 
-type IFieldsType = 'A' | 'B' | 'C' | 'D' | 'E'
+type IFieldsType = 'fieldA' | 'fieldB' | 'fieldC' | 'fieldD' | 'fieldE'
+
+interface IPayload {
+  action: 'vote-captain' | 'remove-team' | 'add-team'
+  deviceId: string
+  teamName: string
+  votedDeviceId: string
+}
 
 declare module '*.png' {
   const value: any
