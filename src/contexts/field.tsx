@@ -4,10 +4,21 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 import { getUniqueId } from 'react-native-device-info'
 
+export interface IField {
+  type: string
+  timer: Date
+  pausedAt: Date
+  status: 'paused' | 'initial' | 'played'
+}
+export interface IVote {
+  teamVotedDeviceId: string
+  teamVotingDeviceId: string
+}
 export interface IVote {
   teamVotedDeviceId: string
   teamVotingDeviceId: string
@@ -24,7 +35,11 @@ export interface ITeam {
 interface IFieldContext {
   teams: ITeam[]
   votes: IVote[]
+  field: IField
   myDeviceId: string
+  isCaptain: boolean
+  captain: string
+  updateField: (field: IField) => void
   updateTeams: (teams: ITeam[]) => void
   updateVotes: (votes: IVote[]) => void
 }
@@ -38,6 +53,7 @@ interface IFieldProvider {
 export const FieldProvider = ({ children }: IFieldProvider) => {
   const [teams, setTeams] = useState<ITeam[]>([])
   const [votes, setVotes] = useState<IVote[]>([])
+  const [field, setField] = useState<IField>({} as IField)
   const [myDeviceId, setMyDeviceId] = useState('')
 
   useEffect(() => {
@@ -48,6 +64,28 @@ export const FieldProvider = ({ children }: IFieldProvider) => {
     getDeviceId()
   }, [])
 
+  const captain = useMemo(() => {
+    if (!teams.length) {
+      return ''
+    }
+    const sortedTeams = teams.sort((a, b) => a.position - b.position)
+    let mostVoted = sortedTeams[0]
+    let mostVotedVotes = sortedTeams[0].votes
+
+    for (let i = 0; i < teams.length; i++) {
+      if (mostVotedVotes < teams[i].votes) {
+        mostVoted = teams[i]
+        mostVotedVotes = teams[i].votes
+      }
+    }
+    return mostVoted.deviceId
+  }, [teams])
+
+  const isCaptain = myDeviceId === captain
+
+  const updateField = useCallback((fieldToUpdate: IField) => {
+    setField(fieldToUpdate)
+  }, [])
   const updateTeams = useCallback((teamsToUpdate: ITeam[]) => {
     setTeams(teamsToUpdate)
   }, [])
@@ -57,7 +95,17 @@ export const FieldProvider = ({ children }: IFieldProvider) => {
 
   return (
     <FieldContext.Provider
-      value={{ teams, updateTeams, votes, updateVotes, myDeviceId }}>
+      value={{
+        teams,
+        updateTeams,
+        votes,
+        isCaptain,
+        captain,
+        updateVotes,
+        myDeviceId,
+        field,
+        updateField,
+      }}>
       {children}
     </FieldContext.Provider>
   )

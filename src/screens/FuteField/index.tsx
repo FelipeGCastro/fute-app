@@ -74,7 +74,7 @@ const FuteField = ({ route }: Props) => {
         <Icon style={styles.icon} name="close" color="#FFF" size={25} />
         <Text style={styles.teamsNow}>{team2}</Text>
       </View>
-      <TimeSection />
+      <TimeSection field={field} />
       {inputVisible && !hasTeam && (
         <Reanimated.View
           entering={FadeIn}

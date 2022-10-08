@@ -56,7 +56,6 @@ const styles = (variables: AllVariablesType) =>
         opacity: 0.3,
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: variables.margin_200,
       },
       userVoted: {
         opacity: 1,
@@ -74,6 +73,7 @@ const styles = (variables: AllVariablesType) =>
         backgroundColor: variables.negative,
         alignItems: 'center',
         justifyContent: 'center',
+        marginLeft: variables.margin_200,
       },
       constants: {
         medalColor: variables.greenLight,

@@ -4,6 +4,7 @@ import { useStylesContext } from 'hooks/styles'
 import stylesheets from './styles'
 import Icon from '/components/common/Icon'
 import { useNavigation } from '@react-navigation/native'
+import { useFieldContext } from '/contexts/field'
 interface Props {
   title: string
   hasBack?: boolean
@@ -13,6 +14,7 @@ interface Props {
 const Header = ({ title, onBackPress, hasBack, isCap }: Props) => {
   const [styles, stylesConstants] = useStylesContext(stylesheets)
   const navigation = useNavigation()
+  const { isCaptain } = useFieldContext()
 
   const handleBack = () => {
     onBackPress && onBackPress()
@@ -37,11 +39,11 @@ const Header = ({ title, onBackPress, hasBack, isCap }: Props) => {
   )
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isCaptain && styles.isCaptain]}>
       {hasBack ? renderBack() : <View style={styles.fakeSpace} />}
 
       <Text style={styles.title}>{title}</Text>
-      {isCap ? renderCap() : <View style={styles.fakeSpace} />}
+      {isCaptain ? renderCap() : <View style={styles.fakeSpace} />}
     </View>
   )
 }

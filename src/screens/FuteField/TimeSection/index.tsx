@@ -1,26 +1,34 @@
-import { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { useStylesContext } from 'hooks/styles'
 import stylesheets from './styles'
 import Icon from '/components/common/Icon'
+import { useTimer } from '/hooks/timer'
+import { useFieldContext } from '/contexts/field'
 
-const TimeSection = () => {
+interface Props {
+  field: IFieldsType
+}
+
+const TimeSection = ({ field }: Props) => {
   const [styles, stylesConstants] = useStylesContext(stylesheets)
-  const [paused, setPaused] = useState(true)
-  const isCaptain = true
+  const { time, pause, play, reset, loading, paused } = useTimer(field)
+  const { isCaptain } = useFieldContext()
 
-  const handlePause = () => {
-    setPaused(true)
-  }
-  const handlePlay = () => {
-    setPaused(false)
-  }
+  function formatTime(timeToFormat: number) {
+    // Remainder of division by 60
+    const seconds = timeToFormat % 60
+    // Divide by 60 and floor the result (get the nearest lower integer)
+    const minutes = Math.floor(timeToFormat / 60)
 
-  const handleResetPress = () => ({})
+    // Put it all in one string
+    return (
+      ('' + minutes).padStart(2, '0') + ':' + ('' + seconds).padStart(2, '0')
+    )
+  }
 
   const renderReset = () => (
     <TouchableOpacity
-      onPress={handleResetPress}
+      onPress={reset}
       activeOpacity={0.7}
       style={styles.playContainer}>
       <Icon name="replay" size={30} color={stylesConstants.playColor} />
@@ -32,10 +40,10 @@ const TimeSection = () => {
       <View style={styles.fakeSpace} />
       <View style={styles.timeCenter}>
         <View style={styles.fakeSpace} />
-        <Text style={styles.time}>05:22</Text>
+        <Text style={styles.time}>{formatTime(time)}</Text>
         {isCaptain ? (
           <TouchableOpacity
-            onPress={paused ? handlePlay : handlePause}
+            onPress={paused ? play : pause}
             activeOpacity={0.7}
             style={styles.playContainer}>
             <Icon
@@ -48,7 +56,11 @@ const TimeSection = () => {
           <View style={styles.fakeSpace} />
         )}
       </View>
-      {true ? renderReset() : <View style={styles.fakeSpace} />}
+      {time !== 0 && isCaptain ? (
+        renderReset()
+      ) : (
+        <View style={styles.fakeSpace} />
+      )}
     </View>
   )
 }

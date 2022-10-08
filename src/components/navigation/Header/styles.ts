@@ -12,6 +12,9 @@ const styles = (variables: AllVariablesType) =>
         paddingHorizontal: variables.margin_100,
         paddingTop: variables.topSafeArea,
       },
+      isCaptain: {
+        backgroundColor: variables.green,
+      },
       backContainer: {
         width: 40,
         height: 40,

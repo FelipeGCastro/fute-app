@@ -16,7 +16,8 @@ const TeamCard = ({
   voted,
 }: Props) => {
   const [styles, stylesConstants] = useStylesContext(stylesheets)
-  const { myDeviceId } = useFieldContext()
+  const { myDeviceId, isCaptain, captain } = useFieldContext()
+  const isMe = team.deviceId === myDeviceId
 
   const handleRemoveTeam = () => {
     Alert.alert('Remover Equipa', 'Tem certeza que deseja remover a equipa?', [
@@ -28,10 +29,7 @@ const TeamCard = ({
     styles.captainButtonContainer,
     team.deviceId === voted && styles.userVoted,
   ]
-  const teamTextStyle = [
-    styles.teamText,
-    team.deviceId === myDeviceId && styles.myTeam,
-  ]
+  const teamTextStyle = [styles.teamText, isMe && styles.myTeam]
   return (
     <View style={styles.container}>
       <View style={styles.teamInfo}>
@@ -39,9 +37,11 @@ const TeamCard = ({
           <Text style={teamTextStyle}>
             {team.position}- {team.name}
           </Text>
-          <View style={styles.teamCapContainer}>
-            <Text style={styles.teamCapLetter}>C</Text>
-          </View>
+          {captain === team.deviceId && (
+            <View style={styles.teamCapContainer}>
+              <Text style={styles.teamCapLetter}>C</Text>
+            </View>
+          )}
         </View>
         <View style={styles.medalsContainer}>
           {team.votes
@@ -65,11 +65,13 @@ const TeamCard = ({
           style={buttonCaptainStyle}>
           <Text style={styles.captainButtonText}>C</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleRemoveTeam}
-          style={styles.buttonRemove}>
-          <Icon size={25} name="close" color="#FFF" />
-        </TouchableOpacity>
+        {(isMe || isCaptain) && (
+          <TouchableOpacity
+            onPress={handleRemoveTeam}
+            style={styles.buttonRemove}>
+            <Icon size={25} name="close" color="#FFF" />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )

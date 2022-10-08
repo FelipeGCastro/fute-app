@@ -23,7 +23,7 @@ const styles = (variables: AllVariablesType) =>
         fontWeight: '300',
         color: variables.white,
         fontStyle: 'italic',
-        marginRight: variables.margin_200,
+        marginHorizontal: variables.margin_200,
       },
       playContainer: {
         width: 40,

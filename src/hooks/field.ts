@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { ITeam, IVote, useFieldContext } from '/contexts/field'
+import { IField, ITeam, IVote, useFieldContext } from '/contexts/field'
 import { socket } from '/services/io'
 
 interface ITeamsResponse extends ITeam {
@@ -11,12 +11,12 @@ interface ITeamsResponse extends ITeam {
   }
 }
 interface IResponse {
-  action: 'update-votes' | 'update-teams'
-  data: ITeamsResponse[] | IVote[]
+  action: 'update-votes' | 'update-teams' | 'update-field'
+  data: ITeamsResponse[] | IVote[] | IField
 }
 
 export const useField = (field: IFieldsType) => {
-  const { updateTeams, updateVotes, votes, teams, myDeviceId } =
+  const { updateTeams, updateVotes, votes, teams, myDeviceId, updateField } =
     useFieldContext()
   const [loading, setLoading] = useState(false)
 
@@ -28,7 +28,6 @@ export const useField = (field: IFieldsType) => {
     () => teams.find(team => team.deviceId === myDeviceId)?.voted,
     [teams, myDeviceId],
   )
-
   useEffect(() => {
     socket.on(field, ({ action, data }: IResponse) => {
       if (action === 'update-teams') {
@@ -42,6 +41,8 @@ export const useField = (field: IFieldsType) => {
         updateTeams(formattedTeams as ITeamsResponse[])
       } else if (action === 'update-votes') {
         updateVotes(data as IVote[])
+      } else if (action === 'update-field') {
+        updateField(data as IField)
       }
     })
     socket.emit(field, { action: 'fetch-teams' } as IPayload)
@@ -69,13 +70,19 @@ export const useField = (field: IFieldsType) => {
   )
 
   const removeTeam = useCallback(
-    async (deviceId: string) => {
+    async (deviceIdToRemove: string) => {
       setLoading(false)
-      socket.emit(field, { deviceId, action: 'remove-team' } as IPayload, () =>
-        setLoading(true),
+      socket.emit(
+        field,
+        {
+          deviceId: myDeviceId,
+          deviceIdToRemove,
+          action: 'remove-team',
+        } as IPayload,
+        () => setLoading(true),
       )
     },
-    [field],
+    [field, myDeviceId],
   )
 
   const addNextTeam = useCallback(

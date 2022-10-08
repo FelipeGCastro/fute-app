@@ -30,7 +30,7 @@ const App = () => {
       <PolyglotProvider>
         <NavigationContainer theme={MyTheme}>
           {isLogged ? <MainNavigator /> : <AuthNavigator />}
-          <StatusBar backgroundColor="#191A19" />
+          <StatusBar backgroundColor="#191A19" barStyle="light-content" />
         </NavigationContainer>
       </PolyglotProvider>
     </StylesProvider>
