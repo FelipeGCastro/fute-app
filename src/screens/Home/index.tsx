@@ -2,10 +2,11 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { useStylesContext } from 'hooks/styles'
 import usePolyglot from 'hooks/polyglot'
 import stylesheets from './styles'
-// import { StackScreenProps } from '@react-navigation/stack'
 import { NativeStackScreenProps as StackScreenProps } from '@react-navigation/native-stack'
 import Card from './Card'
 import FieldMap from '/components/common/FieldMap'
+import { useEffect } from 'react'
+import { useModal } from '/hooks/modal'
 
 type RootStackParamList = {
   Home: any
@@ -17,6 +18,22 @@ type Props = StackScreenProps<RootStackParamList, 'Home'>
 const Home = ({ navigation }: Props) => {
   const [styles] = useStylesContext(stylesheets)
   const t = usePolyglot()
+  const { openModal } = useModal()
+
+  useEffect(() => {
+    openModal({
+      modalName: 'ToastError',
+      modalPropsData: {
+        buttonPrimary: {
+          action: () => ({}),
+          label: 'Confirmar',
+        },
+        text: 'NIUBF ASUBF AISBFn kjs kjbasLKFBA bahb HKaljbsfkljbaLSFAbsf',
+        title: 'Algo deu errado',
+      },
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleOnPress = (type: IFieldsType) => {
     navigation.navigate('FuteField', { field: type })

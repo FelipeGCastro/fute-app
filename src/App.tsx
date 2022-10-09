@@ -9,6 +9,8 @@
  */
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { StatusBar } from 'react-native'
+import ModalManager from './components/modals'
+import { ModalProvider } from './contexts/modal'
 import { PolyglotProvider } from './contexts/polyglot'
 import { StylesProvider } from './contexts/styles'
 import AuthNavigator from './navigation/AuthNavigator'
@@ -26,14 +28,17 @@ const MyTheme = {
 const App = () => {
   const isLogged = true
   return (
-    <StylesProvider>
-      <PolyglotProvider>
-        <NavigationContainer theme={MyTheme}>
-          {isLogged ? <MainNavigator /> : <AuthNavigator />}
-          <StatusBar backgroundColor="#191A19" barStyle="light-content" />
-        </NavigationContainer>
-      </PolyglotProvider>
-    </StylesProvider>
+    <ModalProvider>
+      <StylesProvider>
+        <PolyglotProvider>
+          <NavigationContainer theme={MyTheme}>
+            {isLogged ? <MainNavigator /> : <AuthNavigator />}
+            <StatusBar backgroundColor="#191A19" barStyle="light-content" />
+            <ModalManager />
+          </NavigationContainer>
+        </PolyglotProvider>
+      </StylesProvider>
+    </ModalProvider>
   )
 }
 

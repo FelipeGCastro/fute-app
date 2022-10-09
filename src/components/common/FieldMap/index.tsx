@@ -41,7 +41,7 @@ const FieldMap = ({ withLetter, onPressField }: Props) => {
                 styles[withLetter],
                 isHorizontal && styles.horizontalText,
               ]}>
-              {type}
+              {type.split('field')[1]}
             </Text>
           </View>
         )}

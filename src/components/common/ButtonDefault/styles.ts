@@ -5,8 +5,8 @@ const styles = (variables: AllVariablesType) =>
     common: {
       container: {
         backgroundColor: '#404040',
-        paddingVertical: variables.marginVertical / 2,
-        paddingHorizontal: variables.marginHorizontal,
+        paddingVertical: variables.margin_200 / 2,
+        paddingHorizontal: variables.margin_200,
         borderRadius: variables.borderRegular,
       },
       buttonText: {
