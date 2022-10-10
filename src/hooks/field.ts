@@ -103,6 +103,13 @@ export const useField = (field: IFieldsType) => {
         action: navigation.goBack,
       },
     },
+    notCaptain: {
+      text: 'Você não é mais capitão',
+      buttonPrimary: {
+        label: 'Entendi',
+        action: () => ({}),
+      },
+    },
   }
   interface ErrorCode {
     code: keyof typeof codeErrorMessages
