@@ -29,6 +29,28 @@ const styles = (variables: AllVariablesType) =>
       },
       icon: {
         marginHorizontal: variables.margin_200,
+        alignSelf: 'flex-end',
+      },
+      teamNameContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      buttonRight: {
+        alignSelf: 'flex-end',
+      },
+      buttonRemove: {
+        alignSelf: 'flex-start',
+        width: 40,
+        height: 40,
+        backgroundColor: variables.negative,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: variables.margin_100,
+        marginHorizontal: variables.margin_200,
+      },
+      fakeSpace: {
+        height: 40,
+        marginBottom: variables.margin_100,
       },
       teamsNow: {
         width: variables.contentWidth / 2 - variables.margin_400,

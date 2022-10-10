@@ -39,6 +39,7 @@ interface IPayload {
   teamName: string
   votedDeviceId: string
   deviceIdToRemove: string
+  deviceIdToAddNext: string
 }
 
 declare module '*.png' {

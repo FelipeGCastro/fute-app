@@ -8,12 +8,14 @@ interface Props {
   onPressCaptain: (deviceId: string) => void
   onPressRemoveTeam: (deviceId: string) => void
   voted: string | undefined
+  index: number
 }
 const TeamCard = ({
   team,
   onPressCaptain,
   onPressRemoveTeam,
   voted,
+  index,
 }: Props) => {
   const [styles, stylesConstants] = useStylesContext(stylesheets)
   const { myDeviceId, isCaptain, captain } = useFieldContext()
@@ -35,7 +37,7 @@ const TeamCard = ({
       <View style={styles.teamInfo}>
         <View style={styles.teamName}>
           <Text style={teamTextStyle}>
-            {team.position}- {team.name}
+            {index + 1}- {team.name}
           </Text>
           {captain === team.deviceId && (
             <View style={styles.teamCapContainer}>

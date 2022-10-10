@@ -6,6 +6,7 @@ import {
   FontAwesome5,
   AntDesign,
   Ionicons,
+  Entypo,
 } from '@expo/vector-icons'
 
 const iconNames = {
@@ -16,6 +17,7 @@ const iconNames = {
   close: AntDesign,
   medal: FontAwesome5,
   'arrow-back': Ionicons,
+  'long-arrow-down': FontAwesome,
 } as const
 
 export type IconNames = keyof typeof iconNames

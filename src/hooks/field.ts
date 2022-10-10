@@ -28,7 +28,7 @@ export const useField = (field: IFieldsType) => {
     resetField,
   } = useFieldContext()
   const [loading, setLoading] = useState(false)
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
   const navigation = useNavigation()
 
   const hasTeam = useMemo(() => {
@@ -75,11 +75,16 @@ export const useField = (field: IFieldsType) => {
   )
 
   const addNextTeam = useCallback(
-    async (teamName: string) => {
+    async (teamName?: string, deviceIdToAddNext?: string) => {
       setLoading(false)
       socket.emit(
         field,
-        { deviceId: myDeviceId, action: 'add-team', teamName } as IPayload,
+        {
+          deviceId: myDeviceId,
+          deviceIdToAddNext: deviceIdToAddNext,
+          action: 'add-team',
+          teamName,
+        } as IPayload,
         () => setLoading(true),
       )
     },
@@ -107,11 +112,13 @@ export const useField = (field: IFieldsType) => {
     socket.on(field, ({ action, data }: IResponse) => {
       if (action === 'update-teams') {
         const formatData = data as ITeamsResponse[]
-        const formattedTeams = formatData.map(item => ({
-          ...item,
-          votes: item._count?.teamVoted,
-          voted: item.teamVoting?.teamVotedDeviceId,
-        }))
+        const formattedTeams = formatData
+          .map(item => ({
+            ...item,
+            votes: item._count?.teamVoted,
+            voted: item.teamVoting?.teamVotedDeviceId,
+          }))
+          .sort((a, b) => a.position - b.position)
         updateTeams(formattedTeams as ITeamsResponse[])
       } else if (action === 'update-votes') {
         updateVotes(data as IVote[])
