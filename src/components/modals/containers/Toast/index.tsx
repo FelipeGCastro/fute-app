@@ -36,14 +36,6 @@ const ModalToastContainer = ({
   }, [forceClose, handleClose])
 
   useEffect(() => {
-    if (!isVisible && onClose) {
-      setTimeout(() => {
-        onClose()
-      }, styleConstants.modalTiming)
-    }
-  }, [isVisible, styleConstants, onClose])
-
-  useEffect(() => {
     const autoCloseTimer = setTimeout(() => {
       if (autoCloseTime) {
         handleClose()

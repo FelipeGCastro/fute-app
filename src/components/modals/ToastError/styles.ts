@@ -7,8 +7,9 @@ const styles = (variables: AllVariablesType) =>
     common: {
       container: {
         padding: variables.margin_200,
-        borderRadius: variables.border_m,
-        backgroundColor: variables.negative,
+        borderRadius: variables.border_xs,
+        backgroundColor: variables.negativeBlur,
+        alignItems: 'stretch',
       },
       titleText: {
         ...text.heading,
@@ -20,6 +21,12 @@ const styles = (variables: AllVariablesType) =>
         color: variables.white,
         marginBottom: variables.margin_200,
       },
+      buttonWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: variables.margin_200,
+      },
       button: {
         width: '100%',
         justifyContent: 'center',
@@ -29,7 +36,8 @@ const styles = (variables: AllVariablesType) =>
       },
 
       constants: {
-        blurAmount: 10,
+        blurAmount: 4,
+        topMargin: variables.margin_200,
       },
     },
   })

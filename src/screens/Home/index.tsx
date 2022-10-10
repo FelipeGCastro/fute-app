@@ -18,22 +18,6 @@ type Props = StackScreenProps<RootStackParamList, 'Home'>
 const Home = ({ navigation }: Props) => {
   const [styles] = useStylesContext(stylesheets)
   const t = usePolyglot()
-  const { openModal } = useModal()
-
-  useEffect(() => {
-    openModal({
-      modalName: 'ToastError',
-      modalPropsData: {
-        buttonPrimary: {
-          action: () => ({}),
-          label: 'Confirmar',
-        },
-        text: 'NIUBF ASUBF AISBFn kjs kjbasLKFBA bahb HKaljbsfkljbaLSFAbsf',
-        title: 'Algo deu errado',
-      },
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const handleOnPress = (type: IFieldsType) => {
     navigation.navigate('FuteField', { field: type })

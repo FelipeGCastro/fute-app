@@ -4,14 +4,14 @@ const styles = (variables: AllVariablesType) =>
   MapTypes({
     common: {
       container: {
-        backgroundColor: '#404040',
+        backgroundColor: variables.negative,
         paddingVertical: variables.margin_200 / 2,
         paddingHorizontal: variables.margin_200,
-        borderRadius: variables.borderRegular,
       },
       buttonText: {
-        color: '#fff',
+        color: variables.white,
         fontSize: 16,
+        textTransform: 'uppercase',
       },
       constants: {},
     },

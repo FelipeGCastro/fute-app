@@ -86,6 +86,7 @@ export const lightVariables = {
   white: '#FFFFFF',
   green: '#1E5128',
   negative: '#511E1E',
+  negativeBlur: 'rgba(81, 30, 30, 0.7)',
   greenLight: '#4E9F3D',
   yellowish: '#D8E9A8',
   yellowishOpacity: 'rgba(216,233,168, 0.3)',

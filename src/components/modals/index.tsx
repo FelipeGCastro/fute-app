@@ -18,18 +18,8 @@ const ModalManager = () => {
   const ModalComponent = modals.find(
     modal => modal.key === selectedModal,
   )?.component
-  console.log('modal RENDERED', modalProps)
-  return ModalComponent ? (
-    <ModalComponent
-      {...modalProps}
-      //@ts-ignore
-      onClose={() => {
-        if (typeof modalProps?.onClose === 'function') {
-          modalProps?.onClose()
-        }
-      }}
-    />
-  ) : null
+
+  return ModalComponent ? <ModalComponent {...modalProps} /> : null
 }
 
 export default ModalManager

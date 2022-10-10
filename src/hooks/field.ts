@@ -1,4 +1,6 @@
+import { useNavigation } from '@react-navigation/native'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useModal } from './modal'
 import { IField, ITeam, IVote, useFieldContext } from '/contexts/field'
 import { socket } from '/services/io'
 
@@ -16,9 +18,18 @@ interface IResponse {
 }
 
 export const useField = (field: IFieldsType) => {
-  const { updateTeams, updateVotes, votes, teams, myDeviceId, updateField } =
-    useFieldContext()
+  const {
+    updateTeams,
+    updateVotes,
+    votes,
+    teams,
+    myDeviceId,
+    updateField,
+    resetField,
+  } = useFieldContext()
   const [loading, setLoading] = useState(false)
+  const { openModal, closeModal } = useModal()
+  const navigation = useNavigation()
 
   const hasTeam = useMemo(() => {
     return teams.findIndex(team => team.deviceId === myDeviceId) !== -1
@@ -28,29 +39,6 @@ export const useField = (field: IFieldsType) => {
     () => teams.find(team => team.deviceId === myDeviceId)?.voted,
     [teams, myDeviceId],
   )
-  useEffect(() => {
-    socket.on(field, ({ action, data }: IResponse) => {
-      if (action === 'update-teams') {
-        const formatData = data as ITeamsResponse[]
-        console.log('data:', JSON.stringify(data, null, 2))
-        const formattedTeams = formatData.map(item => ({
-          ...item,
-          votes: item._count?.teamVoted,
-          voted: item.teamVoting?.teamVotedDeviceId,
-        }))
-        updateTeams(formattedTeams as ITeamsResponse[])
-      } else if (action === 'update-votes') {
-        updateVotes(data as IVote[])
-      } else if (action === 'update-field') {
-        updateField(data as IField)
-      }
-    })
-    socket.emit(field, { action: 'fetch-teams' } as IPayload)
-    return () => {
-      socket.off(field)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const voteCaptain = useCallback(
     async (votedDeviceId: string) => {
@@ -70,13 +58,14 @@ export const useField = (field: IFieldsType) => {
   )
 
   const removeTeam = useCallback(
-    async (deviceIdToRemove: string) => {
+    async (deviceIdToRemove?: string) => {
+      console.log('myDeviceId:', myDeviceId)
       setLoading(false)
       socket.emit(
         field,
         {
           deviceId: myDeviceId,
-          deviceIdToRemove,
+          deviceIdToRemove: deviceIdToRemove || myDeviceId,
           action: 'remove-team',
         } as IPayload,
         () => setLoading(true),
@@ -96,6 +85,58 @@ export const useField = (field: IFieldsType) => {
     },
     [field, myDeviceId],
   )
+
+  const codeErrorMessages = {
+    otherField: {
+      text: 'Você está em outro campo.',
+      buttonPrimary: {
+        label: 'Sair do Outro Campo',
+        action: removeTeam,
+      },
+      buttonSecondary: {
+        label: 'Voltar',
+        action: navigation.goBack,
+      },
+    },
+  }
+  interface ErrorCode {
+    code: keyof typeof codeErrorMessages
+  }
+
+  useEffect(() => {
+    socket.on(field, ({ action, data }: IResponse) => {
+      if (action === 'update-teams') {
+        const formatData = data as ITeamsResponse[]
+        const formattedTeams = formatData.map(item => ({
+          ...item,
+          votes: item._count?.teamVoted,
+          voted: item.teamVoting?.teamVotedDeviceId,
+        }))
+        updateTeams(formattedTeams as ITeamsResponse[])
+      } else if (action === 'update-votes') {
+        updateVotes(data as IVote[])
+      } else if (action === 'update-field') {
+        updateField(data as IField)
+      }
+    })
+
+    socket.on('error', ({ code }: ErrorCode) => {
+      openModal({
+        modalName: 'ToastError',
+        modalPropsData: {
+          title: 'Aconteceu um problema.',
+          ...codeErrorMessages[code],
+        },
+      })
+    })
+    socket.emit(field, { action: 'fetch-teams' } as IPayload)
+    return () => {
+      resetField()
+      socket.off(field)
+      socket.off('error')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return {
     removeTeam,

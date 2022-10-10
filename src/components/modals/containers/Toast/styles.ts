@@ -14,7 +14,7 @@ const styles = (variables: AllVariablesType) =>
       },
 
       constants: {
-        backdropOpacity: 0.7,
+        backdropOpacity: 0.6,
         modalTiming: variables.modalTiming,
       },
     },

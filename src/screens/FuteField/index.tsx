@@ -44,7 +44,6 @@ const FuteField = ({ route }: Props) => {
 
   const handleAddTeam = () => {
     if (teamName.length > 3) {
-      console.log('addNextTeam:')
       addNextTeam(teamName)
     }
   }

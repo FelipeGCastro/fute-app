@@ -50,17 +50,17 @@ const ToastError = ({
 
   const renderButtons = () => {
     const handleSecondaryAction = () => {
-      handleClose()
       buttonSecondary?.action()
+      handleClose()
     }
 
     const handlePrimaryAction = () => {
-      handleClose()
       buttonPrimary?.action()
+      handleClose()
     }
 
     return (
-      <>
+      <View style={styles.buttonWrapper}>
         {buttonSecondary && (
           <ButtonDefault
             text={buttonSecondary.label}
@@ -74,12 +74,15 @@ const ToastError = ({
             onPress={handlePrimaryAction}
           />
         )}
-      </>
+      </View>
     )
   }
 
   return (
-    <ModalToastContainer forceClose={forceClose} onClose={onClose}>
+    <ModalToastContainer
+      marginTop={styleConstants.topMargin}
+      forceClose={forceClose}
+      onClose={onClose}>
       <BlurViewCustom
         style={styles.container}
         blurType="light"

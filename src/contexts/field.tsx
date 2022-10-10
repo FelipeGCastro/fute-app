@@ -42,6 +42,7 @@ interface IFieldContext {
   updateField: (field: IField) => void
   updateTeams: (teams: ITeam[]) => void
   updateVotes: (votes: IVote[]) => void
+  resetField: () => void
 }
 
 const FieldContext = createContext({} as IFieldContext)
@@ -64,6 +65,11 @@ export const FieldProvider = ({ children }: IFieldProvider) => {
     getDeviceId()
   }, [])
 
+  const resetField = useCallback(() => {
+    setTeams([])
+    setVotes([])
+    setField({} as IField)
+  }, [])
   const captain = useMemo(() => {
     if (!teams.length) {
       return ''
@@ -105,6 +111,7 @@ export const FieldProvider = ({ children }: IFieldProvider) => {
         myDeviceId,
         field,
         updateField,
+        resetField,
       }}>
       {children}
     </FieldContext.Provider>

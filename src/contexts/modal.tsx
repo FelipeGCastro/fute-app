@@ -17,8 +17,7 @@ interface IModalProvider {
 export const ModalProvider = ({ children }: IModalProvider) => {
   const [modal, setModal] = useState<ModalsName | null>(null)
   const [modalProps, setModalProps] = useState<ModalProps>({} as ModalProps)
-  console.log('modal:', modal)
-  console.log('modalProps:', modalProps)
+
   const openModal = ({
     modalName,
     modalPropsData = {} as ModalProps,
