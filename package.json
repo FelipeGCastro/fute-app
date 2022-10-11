@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:release": "cd android && ./gradlew clean && ./gradlew --stop && cd .. && react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "ios-medium": "react-native run-ios --simulator='iPhone 13 Pro'",
     "start": "react-native start",
