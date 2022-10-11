@@ -15,6 +15,7 @@ import { PolyglotProvider } from './contexts/polyglot'
 import { StylesProvider } from './contexts/styles'
 import AuthNavigator from './navigation/AuthNavigator'
 import MainNavigator from './navigation/MainNavigator'
+import RNBootSplash from 'react-native-bootsplash'
 
 const MyTheme = {
   ...DefaultTheme,
@@ -31,7 +32,9 @@ const App = () => {
     <ModalProvider>
       <StylesProvider>
         <PolyglotProvider>
-          <NavigationContainer theme={MyTheme}>
+          <NavigationContainer
+            onReady={() => RNBootSplash.hide()}
+            theme={MyTheme}>
             {isLogged ? <MainNavigator /> : <AuthNavigator />}
             <StatusBar backgroundColor="#191A19" barStyle="light-content" />
             <ModalManager />

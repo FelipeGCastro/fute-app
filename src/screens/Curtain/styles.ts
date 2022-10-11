@@ -30,9 +30,9 @@ const styles = (variables: AllVariablesType) =>
         color: variables.yellowish,
       },
       poweredBy: {
-        fontSize: 10,
+        fontSize: 12,
         marginTop: variables.margin_50,
-        color: variables.yellowish,
+        color: variables.white,
       },
       buttonContainer: {
         backgroundColor: 'rgba(216,233,168, 0.2)',
